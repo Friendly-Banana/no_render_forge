@@ -1,0 +1,8 @@
+{
+  "package": "me.banana.no_render.mixin",
+  "required": true,
+  "refmap": "no_render.mixins.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "client": ["ClientLevelMixin"],
+  "minVersion": "0.8"
+}

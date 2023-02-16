@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="fuzsconfigmenusforge">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/fuzs-configmenusforge.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
