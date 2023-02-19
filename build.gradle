@@ -139,6 +139,9 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     // Put repositories for dependencies here
     // ForgeGradle automatically adds the Forge maven and Maven Central for you
+    maven {
+        url 'https://jitpack.io'
+    }
 
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so:
     // flatDir {
@@ -146,12 +149,17 @@ repositories {
     // }
 }
 
+jarJar.enable()
+
 dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
+    jarJar(group: "com.github.LlamaLad7", name: "MixinExtras", version: "[${project.mixin_extras_version}]")
+    minecraftLibrary("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
     // Apply Mixin AP
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
@@ -170,7 +178,7 @@ dependencies {
 
 mixin {
     // MixinGradle Settings
-    add sourceSets.main, 'no_render.mixins.refmap.json'
+    add sourceSets.main, "${project.mod_id}.refmap.json"
     config 'no_render.mixins.json'
     // run genIntellijRuns after changing run configuration
     //debug.verbose = true
@@ -198,6 +206,12 @@ jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 // publish.dependsOn('reobfJar')
 
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+reobf {
+    jarJar {}
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -205,9 +219,7 @@ publishing {
         }
     }
     repositories {
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
-        }
+        // maven { url "file://${project.projectDir}/mcmodsrepo" }
     }
 }
 

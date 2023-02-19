@@ -1,5 +1,6 @@
 package me.banana.no_render;
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -14,14 +15,15 @@ public class NoRender {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public NoRender() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC, MOD_ID + ".toml");
+        MixinExtrasBootstrap.init();
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC, MOD_ID + ".toml");
         FMLJavaModLoadingContext.get().getModEventBus().addListener(NoRender::onConfigReload);
     }
 
     public static void onConfigReload(ModConfigEvent modConfigEvent) {
         if (modConfigEvent.getConfig().getModId().equals(MOD_ID)) {
-            NoRenderConfig.updateHiddenTypes();
+            NoRenderConfig.CONFIG.onConfigReload();
         }
     }
 }

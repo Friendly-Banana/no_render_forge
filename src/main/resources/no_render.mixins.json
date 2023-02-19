@@ -1,8 +1,8 @@
 {
   "package": "me.banana.no_render.mixin",
   "required": true,
-  "refmap": "no_render.mixins.refmap.json",
+  "refmap": "no_render.refmap.json",
   "compatibilityLevel": "JAVA_17",
-  "client": ["ClientLevelMixin"],
+  "client": ["FogRendererMixin","LevelRendererMixin"],
   "minVersion": "0.8"
 }
