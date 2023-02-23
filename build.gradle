@@ -18,7 +18,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = project.maven_group
-version = project.mod_version
+version = "$project.mod_version-$project.minecraft_version"
 archivesBaseName = project.mod_id
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -158,8 +158,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
     jarJar(group: "com.github.LlamaLad7", name: "MixinExtras", version: "[${project.mixin_extras_version}]")
-    minecraftLibrary("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
+    minecraftLibrary annotationProcessor("com.github.LlamaLad7:MixinExtras:${project.mixin_extras_version}")
     // Apply Mixin AP
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
@@ -195,7 +194,7 @@ jar {
                     "Implementation-Title"    : project.name,
                     "Implementation-Version"  : project.jar.archiveVersion,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                    "MixinConfigs"            : "no_render.mixins.json"
+                    "MixinConfigs"            : "no_render.mixins.json",
         ])
     }
 }
