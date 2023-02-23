@@ -15,7 +15,10 @@ import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.lighting.LevelLightEngine;
+import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Collections;
@@ -24,6 +27,10 @@ import java.util.stream.StreamSupport;
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
+    @Shadow
+    @Final
+    private static Logger LOGGER;
+
     @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/lighting/LevelLightEngine;runUpdates(IZZ)I"))
     private boolean noRender$skipLightUpdates(LevelLightEngine lightEngine, int i, boolean skylight, boolean skipEdgeLightPropagation_) {
         return !NoRenderConfig.CONFIG.skipLightUpdates.get();

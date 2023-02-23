@@ -13,9 +13,9 @@
   </component>
   <component name="McpModuleSettings">
     <option name="mappingFile" value="$MODULE_DIR$/../../build/createMcpToSrg/output.tsrg" />
-    <option name="mcpVersion" value="official_1.18.2" />
-    <option name="minecraftVersion" value="1.18.2" />
-    <option name="platformVersion" value="40.1.92" />
+    <option name="mcpVersion" value="official_1.19.2" />
+    <option name="minecraftVersion" value="1.19.2" />
+    <option name="platformVersion" value="43.2.4" />
     <option name="srgType" value="TSRG" />
   </component>
   <component name="NewModuleRootManager">
