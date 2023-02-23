@@ -22,6 +22,7 @@ public class NoRenderConfig {
     public final ForgeConfigSpec.BooleanValue skipLightUpdates;
     public final ForgeConfigSpec.BooleanValue hideBlocks;
     public final ForgeConfigSpec.BooleanValue hideBlockEntities;
+    public final ForgeConfigSpec.BooleanValue hideGlobalBlockEntities;
     public final ForgeConfigSpec.BooleanValue hideSky;
     public final ForgeConfigSpec.BooleanValue hideTerrainFog;
     public final ForgeConfigSpec.BooleanValue hideParticles;
@@ -40,7 +41,9 @@ public class NoRenderConfig {
 
         builder.push("World");
         hideBlocks = builder.define("hideBlocks", false);
-        hideBlockEntities = builder.define("hideBlockEntities", false);
+        hideBlockEntities = builder.comment("very specific things like the rotating entity in spawners").define("hideBlockEntities", false);
+        hideGlobalBlockEntities = builder.comment("BEs that render offscreen like beacon beams and structure block position marker")
+            .define("hideGlobalBlockEntities", false);
         hideSky = builder.define("hideSky", false);
         hideTerrainFog = builder.define("hideTerrainFog", false);
         hideParticles = builder.define("hideParticles", false);
