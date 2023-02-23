@@ -17,7 +17,7 @@ public class NoRender {
     public NoRender() {
         MixinExtrasBootstrap.init();
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC, MOD_ID + ".toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(NoRender::onConfigReload);
     }
 
