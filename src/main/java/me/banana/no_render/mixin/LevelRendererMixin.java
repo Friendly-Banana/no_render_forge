@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.StreamSupport;
 
@@ -44,12 +45,14 @@ public class LevelRendererMixin {
         return !NoRenderConfig.CONFIG.hideBlocks.get();
     }
 
+    @ModifyExpressionValue(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$CompiledChunk;getRenderableBlockEntities()Ljava/util/List;"))
+    private List<BlockEntity> noRender$hideBlockEntities(List<BlockEntity> blockEntities) {
+        return NoRenderConfig.CONFIG.hideBlockEntities.get() ? Collections.emptyList() : blockEntities;
+    }
+
     @ModifyExpressionValue(method = "renderLevel", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/LevelRenderer;globalBlockEntities:Ljava/util/Set;", ordinal = 1))
-    private Set<BlockEntity> noRender$hideBlockEntities(Set<BlockEntity> globalBlockEntities) {
-        if (NoRenderConfig.CONFIG.hideBlockEntities.get()) {
-            return Collections.emptySet();
-        }
-        return globalBlockEntities;
+    private Set<BlockEntity> noRender$hideGlobalBlockEntities(Set<BlockEntity> globalBlockEntities) {
+        return NoRenderConfig.CONFIG.hideGlobalBlockEntities.get() ? Collections.emptySet() : globalBlockEntities;
     }
 
     @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/math/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V"))
