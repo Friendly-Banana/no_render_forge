@@ -1,8 +1,14 @@
 package me.banana.no_render;
 
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ambient.AmbientCreature;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
@@ -17,6 +23,8 @@ public class NoRenderConfig {
     public final ForgeConfigSpec.BooleanValue hideAllEntities;
     public final ForgeConfigSpec.BooleanValue hideItems;
     public final ForgeConfigSpec.BooleanValue hideItemframes;
+    public final ForgeConfigSpec.BooleanValue hidePassiveMobs;
+    public final ForgeConfigSpec.BooleanValue hideVillager;
     public final ForgeConfigSpec.BooleanValue hidePlayer;
 
     public final ForgeConfigSpec.BooleanValue skipLightUpdates;
@@ -36,6 +44,8 @@ public class NoRenderConfig {
         hideAllEntities = builder.define("hideAllEntities", false);
         hideItems = builder.define("hideItems", false);
         hideItemframes = builder.define("hideItemframes", false);
+        hidePassiveMobs = builder.define("hidePassiveMobs", false);
+        hideVillager = builder.define("hideVillager", false);
         hidePlayer = builder.define("hidePlayer", false);
         builder.pop();
 
@@ -58,6 +68,16 @@ public class NoRenderConfig {
         }
         if (hideItemframes.get()) {
             hiddenTypes.add(ItemFrame.class);
+        }
+        if (hidePassiveMobs.get()) {
+            hiddenTypes.add(WaterAnimal.class);
+            hiddenTypes.add(IronGolem.class);
+            hiddenTypes.add(Animal.class);
+            hiddenTypes.add(Allay.class);
+            hiddenTypes.add(AmbientCreature.class);
+        }
+        if (hideVillager.get()) {
+            hiddenTypes.add(Villager.class);
         }
         if (hidePlayer.get()) {
             hiddenTypes.add(Player.class);
